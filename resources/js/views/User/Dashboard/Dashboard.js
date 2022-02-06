@@ -25,33 +25,43 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
+            <>
                 <Header
                     userData={this.state.user}
                     userIsLoggedIn={this.state.isLoggedIn}
                 />
-                <br />
-                <table className="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th scope="row ">User Id</th>
-                            <td>{this.state.user.id}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row ">Full Name</th>
-                            <td>{this.state.user.name}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row ">Email</th>
-                            <td>{this.state.user.email}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row ">Phone</th>
-                            <td>{this.state.user.phone}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 my-5">
+                            <div className="card">
+                                <div className="card-header">Welcome User</div>
+                                <div className="table-responsive p-4">
+                                    <table className="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row ">User Id</th>
+                                                <td>{this.state.user.id}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row ">Full Name</th>
+                                                <td>{this.state.user.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row ">Email</th>
+                                                <td>{this.state.user.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row ">Phone</th>
+                                                <td>{this.state.user.phone}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
         );
     }
 }

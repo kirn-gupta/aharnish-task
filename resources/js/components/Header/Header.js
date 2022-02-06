@@ -24,30 +24,72 @@ class Header extends Component {
         };
 
         return (
-            <nav className="navbar">
-                <ul>
-                    <li>
-                        <Link to="/">Index</Link>
-                    </li>
-                    {this.state.isLoggedIn ? (
-                        <li className="has-sub">
-                            <Link to="/dashboard">Dashboard</Link> |{" "}
-                            <a href="" onClick={this.logOut}>
-                                Logout
-                            </a>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarNavDropdown"
+                >
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <Link to="/" className="nav-link">
+                                Index
+                            </Link>
                         </li>
-                    ) : (
-                        ""
-                    )}
-                    {!this.state.isLoggedIn ? (
-                        <li>
-                            <Link to="/login">Login</Link> |{" "}
-                            <Link to="/register">Register</Link>
-                        </li>
-                    ) : (
-                        ""
-                    )}
-                </ul>
+                        {this.state.isLoggedIn ? (
+                            <>
+                                <li className="nav-item">
+                                    <Link to="/dashboard" className="nav-link">
+                                        Dashboard
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to="/about" className="nav-link">
+                                        About
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to="/contact" className="nav-link">
+                                        Contact
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <a
+                                        href=""
+                                        onClick={this.logOut}
+                                        className="nav-link"
+                                    >
+                                        Logout
+                                    </a>
+                                </li>
+                            </>
+                        ) : (
+                            ""
+                        )}
+                        {!this.state.isLoggedIn ? (
+                            <>
+                                <li className="nav-item" className="nav-link">
+                                    <Link to="/login">Login</Link>
+                                </li>
+                                <li className="nav-item" className="nav-link">
+                                    <Link to="/register">Register</Link>
+                                </li>
+                            </>
+                        ) : (
+                            ""
+                        )}
+                    </ul>
+                </div>
             </nav>
         );
     }
