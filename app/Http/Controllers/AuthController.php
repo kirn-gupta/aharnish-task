@@ -17,11 +17,18 @@ class AuthController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
+
+
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => bcrypt($request->password)
         ]);
+
+        // print_r($user);
+        // print_r($request->email);
+        // die();
 
         $user->save();
 
@@ -30,6 +37,7 @@ class AuthController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'phone' => $request->phone,
         ], 201);
     }
 
@@ -38,11 +46,11 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            // 'remember_me' => 'boolean'
         ]);
 
         $credentials = $request->only('email', 'password');
-
+        // print_r($credentials);
+        // die();
         if (!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
@@ -50,12 +58,8 @@ class AuthController extends Controller
 
         $user = $request->user();
 
-
-
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-
-
 
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
@@ -65,6 +69,7 @@ class AuthController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'phone' => $user->phone,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(

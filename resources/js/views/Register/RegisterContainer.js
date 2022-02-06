@@ -15,6 +15,7 @@ class RegisterContainer extends Component {
                 email: "",
                 password: "",
                 password_confirmation: "",
+                phone: "",
             },
             redirect: props.redirect,
         };
@@ -23,6 +24,7 @@ class RegisterContainer extends Component {
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handlePasswordConfirm = this.handlePasswordConfirm.bind(this);
+        this.handlePhone = this.handlePhone.bind(this);
     }
 
     componentWillMount() {
@@ -50,7 +52,7 @@ class RegisterContainer extends Component {
         this.setState({ formSubmitting: true });
         ReactDOM.findDOMNode(this).scrollIntoView();
         let userData = this.state.user;
-        console.log(userData);
+        // console.log(userData);
         axios
             .post("/api/auth/signup", userData)
             .then((response) => {
@@ -62,6 +64,7 @@ class RegisterContainer extends Component {
                         id: json.data.id,
                         name: json.data.name,
                         email: json.data.email,
+                        phone: json.data.phone,
                         activation_token: json.data.activation_token,
                     };
                     let appState = {
@@ -101,6 +104,7 @@ class RegisterContainer extends Component {
             })
             .finally(this.setState({ error: "" }));
     }
+
     handleName(e) {
         let value = e.target.value;
         this.setState((prevState) => ({
@@ -120,6 +124,7 @@ class RegisterContainer extends Component {
             },
         }));
     }
+
     handlePassword(e) {
         let value = e.target.value;
         this.setState((prevState) => ({
@@ -129,6 +134,7 @@ class RegisterContainer extends Component {
             },
         }));
     }
+
     handlePasswordConfirm(e) {
         let value = e.target.value;
         this.setState((prevState) => ({
@@ -138,6 +144,17 @@ class RegisterContainer extends Component {
             },
         }));
     }
+
+    handlePhone(e) {
+        let value = e.target.value;
+        this.setState((prevState) => ({
+            user: {
+                ...prevState.user,
+                phone: value,
+            },
+        }));
+        // console.log(this.state.user);
+    }
     render() {
         let errorMessage = this.state.errorMessage;
         let arr = [];
@@ -145,109 +162,134 @@ class RegisterContainer extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
-                        <h2>Create Your Account</h2>
-
-                        {this.state.isRegistered ? (
-                            <FlashMessage
-                                duration={60000}
-                                persistOnHover={true}
-                            >
-                                <h5 className={"alert alert-success"}>
-                                    Registration successful
-                                </h5>
-                            </FlashMessage>
-                        ) : (
-                            ""
-                        )}
-                        {this.state.error ? (
-                            <FlashMessage
-                                duration={900000}
-                                persistOnHover={true}
-                            >
-                                <h5 className={"alert alert-danger"}>
-                                    Error: {this.state.error}
-                                </h5>
-                                <ul>
-                                    {arr.map((item, i) => (
-                                        <li key={i}>
-                                            <h5 style={{ color: "red" }}>
-                                                {item}
-                                            </h5>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </FlashMessage>
-                        ) : (
-                            ""
-                        )}
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group">
-                                <input
-                                    id="name"
-                                    type="text"
-                                    placeholder="Name"
-                                    className="form-control"
-                                    required
-                                    onChange={this.handleName}
-                                />
+                    <div className="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 my-5">
+                        <div className="card">
+                            <div className="card-body">
+                                <h2 className="card-title">Create Account</h2>
+                                {this.state.isRegistered ? (
+                                    <FlashMessage
+                                        duration={60000}
+                                        persistOnHover={true}
+                                    >
+                                        <h5 className={"alert alert-success"}>
+                                            Registration successful
+                                        </h5>
+                                    </FlashMessage>
+                                ) : (
+                                    ""
+                                )}
+                                {this.state.error ? (
+                                    <FlashMessage
+                                        duration={900000}
+                                        persistOnHover={true}
+                                    >
+                                        <h5 className={"alert alert-danger"}>
+                                            Error: {this.state.error}
+                                        </h5>
+                                        <ul>
+                                            {arr.map((item, i) => (
+                                                <li key={i}>
+                                                    <h5
+                                                        style={{ color: "red" }}
+                                                    >
+                                                        {item}
+                                                    </h5>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </FlashMessage>
+                                ) : (
+                                    ""
+                                )}
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="form-group my-3">
+                                        <input
+                                            id="name"
+                                            type="text"
+                                            placeholder="Name"
+                                            className="form-control"
+                                            required
+                                            onChange={this.handleName}
+                                        />
+                                    </div>
+                                    <div className="form-group my-3">
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            placeholder="E-mail"
+                                            className="form-control"
+                                            required
+                                            onChange={this.handleEmail}
+                                        />
+                                    </div>
+                                    <div className="form-group my-3">
+                                        <input
+                                            id="password"
+                                            type="password"
+                                            name="password"
+                                            placeholder="Password"
+                                            className="form-control"
+                                            required
+                                            onChange={this.handlePassword}
+                                        />
+                                    </div>
+                                    <div className="form-group my-3">
+                                        <input
+                                            id="password_confirm"
+                                            type="password"
+                                            name="password_confirm"
+                                            placeholder="Confirm Password"
+                                            className="form-control"
+                                            required
+                                            onChange={
+                                                this.handlePasswordConfirm
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group my-3">
+                                        <input
+                                            id="phone"
+                                            type="text"
+                                            name="phone"
+                                            placeholder="Phone Number"
+                                            className="form-control"
+                                            required
+                                            onChange={this.handlePhone}
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        name="singlebutton"
+                                        className="btn btn-primary mb-5"
+                                        disabled={
+                                            this.state.formSubmitting
+                                                ? "disabled"
+                                                : ""
+                                        }
+                                    >
+                                        Create Account
+                                    </button>
+                                </form>
+                                <div className="d-flex justify-content-between">
+                                    <p className="text-dark">
+                                        Already have an account?
+                                        <Link
+                                            to="/login"
+                                            className="text-yellow"
+                                        >
+                                            {" "}
+                                            Log In
+                                        </Link>
+                                    </p>
+                                    <span className="pull-right">
+                                        <Link to="/" className="text-dark">
+                                            Back to Home
+                                        </Link>
+                                    </span>
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    placeholder="E-mail"
-                                    className="form-control"
-                                    required
-                                    onChange={this.handleEmail}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    className="form-control"
-                                    required
-                                    onChange={this.handlePassword}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    id="password_confirm"
-                                    type="password"
-                                    name="password_confirm"
-                                    placeholder="Confirm Password"
-                                    className="form-control"
-                                    required
-                                    onChange={this.handlePasswordConfirm}
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                name="singlebutton"
-                                className="btn btn-default btn-lg  btn-block mb10"
-                                disabled={
-                                    this.state.formSubmitting ? "disabled" : ""
-                                }
-                            >
-                                Create Account
-                            </button>
-                        </form>
-                        <p className="text-white">
-                            Already have an account?
-                            <Link to="/login" className="text-yellow">
-                                {" "}
-                                Log In
-                            </Link>
-                            <span className="pull-right">
-                                <Link to="/" className="text-white">
-                                    Back to Home
-                                </Link>
-                            </span>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

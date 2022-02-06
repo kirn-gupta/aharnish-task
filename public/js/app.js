@@ -5918,17 +5918,17 @@ var LoginContainer = /*#__PURE__*/function (_Component) {
       this.setState({
         formSubmitting: true
       });
-      var userData = this.state.user;
+      var userData = this.state.user; // console.log(userData);
+
       axios.post("/api/auth/login", userData).then(function (response) {
         return response;
       }).then(function (json) {
-        console.log(json);
-
         if (json.data.success) {
           var _userData = {
             id: json.data.id,
             name: json.data.name,
             email: json.data.email,
+            phone: json.data.phone,
             access_token: json.data.access_token
           };
           var appState = {
@@ -6007,81 +6007,87 @@ var LoginContainer = /*#__PURE__*/function (_Component) {
       var error = state.error;
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "container",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "row",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-              className: "text-center mb30",
-              children: "Log In To Your Account"
-            }), this.state.isLoggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_1___default()), {
-              duration: 60000,
-              persistOnHover: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-                className: "alert alert-success",
-                children: "Login successful, redirecting..."
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "offset-lg-3 col-lg-6 col-md-12 col-sm-12 col-12 my-5",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "card",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                className: "card-body",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+                  className: "card-title mb-5",
+                  children: "Log In"
+                }), this.state.isLoggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_1___default()), {
+                  duration: 60000,
+                  persistOnHover: true,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
+                    className: "alert alert-success",
+                    children: "Login successful, redirecting..."
+                  })
+                }) : "", this.state.error ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_1___default()), {
+                  duration: 100000,
+                  persistOnHover: true,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h5", {
+                    className: "alert alert-danger",
+                    children: ["Error: ", this.state.error]
+                  })
+                }) : "", error && !this.state.isLoggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_1___default()), {
+                  duration: 100000,
+                  persistOnHover: true,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h5", {
+                    className: "alert alert-danger",
+                    children: ["Error: ", error]
+                  })
+                }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+                  onSubmit: this.handleSubmit,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                      id: "email",
+                      type: "email",
+                      name: "email",
+                      placeholder: "E-mail",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handleEmail
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                      id: "password",
+                      type: "password",
+                      name: "password",
+                      placeholder: "Password",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handlePassword
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
+                    disabled: this.state.formSubmitting,
+                    type: "submit",
+                    name: "singlebutton",
+                    className: "btn btn-primary mb-5",
+                    children: [" ", this.state.formSubmitting ? "Logging You In..." : "Log In", " "]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "d-flex justify-content-between",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+                    className: "text-dark",
+                    children: ["Don't have an account?", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+                      to: "/register",
+                      className: "text-yellow",
+                      children: [" ", "Register"]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+                    to: "/",
+                    className: "text-dark",
+                    children: "Back to Index"
+                  })]
+                })]
               })
-            }) : "", this.state.error ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_1___default()), {
-              duration: 100000,
-              persistOnHover: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h5", {
-                className: "alert alert-danger",
-                children: ["Error: ", this.state.error]
-              })
-            }) : "", error && !this.state.isLoggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_1___default()), {
-              duration: 100000,
-              persistOnHover: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h5", {
-                className: "alert alert-danger",
-                children: ["Error: ", error]
-              })
-            }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
-              onSubmit: this.handleSubmit,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                className: "form-group",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                  id: "email",
-                  type: "email",
-                  name: "email",
-                  placeholder: "E-mail",
-                  className: "form-control",
-                  required: true,
-                  onChange: this.handleEmail
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                className: "form-group",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                  id: "password",
-                  type: "password",
-                  name: "password",
-                  placeholder: "Password",
-                  className: "form-control",
-                  required: true,
-                  onChange: this.handlePassword
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
-                disabled: this.state.formSubmitting,
-                type: "submit",
-                name: "singlebutton",
-                className: "btn btn-default btn-lg  btn-block mb10",
-                children: [" ", this.state.formSubmitting ? "Logging You In..." : "Log In", " "]
-              })]
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-            className: "text-white",
-            children: ["Don't have an account?", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-              to: "/register",
-              className: "text-yellow",
-              children: [" ", "Register"]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "pull-right",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-                to: "/",
-                className: "text-white",
-                children: "Back to Index"
-              })
-            })]
-          })]
+            })
+          })
         })
       });
     }
@@ -6310,7 +6316,8 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
         name: "",
         email: "",
         password: "",
-        password_confirmation: ""
+        password_confirmation: "",
+        phone: ""
       },
       redirect: props.redirect
     };
@@ -6319,6 +6326,7 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
     _this.handleEmail = _this.handleEmail.bind(_assertThisInitialized(_this));
     _this.handlePassword = _this.handlePassword.bind(_assertThisInitialized(_this));
     _this.handlePasswordConfirm = _this.handlePasswordConfirm.bind(_assertThisInitialized(_this));
+    _this.handlePhone = _this.handlePhone.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -6363,8 +6371,8 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
         formSubmitting: true
       });
       react_dom__WEBPACK_IMPORTED_MODULE_1__.findDOMNode(this).scrollIntoView();
-      var userData = this.state.user;
-      console.log(userData);
+      var userData = this.state.user; // console.log(userData);
+
       axios.post("/api/auth/signup", userData).then(function (response) {
         return response;
       }).then(function (json) {
@@ -6373,6 +6381,7 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
             id: json.data.id,
             name: json.data.name,
             email: json.data.email,
+            phone: json.data.phone,
             activation_token: json.data.activation_token
           };
           var appState = {
@@ -6465,6 +6474,18 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "handlePhone",
+    value: function handlePhone(e) {
+      var value = e.target.value;
+      this.setState(function (prevState) {
+        return {
+          user: _objectSpread(_objectSpread({}, prevState.user), {}, {
+            phone: value
+          })
+        };
+      }); // console.log(this.state.user);
+    }
+  }, {
     key: "render",
     value: function render() {
       var errorMessage = this.state.errorMessage;
@@ -6476,102 +6497,123 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
         className: "container",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "row",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-              children: "Create Your Account"
-            }), this.state.isRegistered ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_2___default()), {
-              duration: 60000,
-              persistOnHover: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
-                className: "alert alert-success",
-                children: "Registration successful"
-              })
-            }) : "", this.state.error ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)((react_flash_message__WEBPACK_IMPORTED_MODULE_2___default()), {
-              duration: 900000,
-              persistOnHover: true,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("h5", {
-                className: "alert alert-danger",
-                children: ["Error: ", this.state.error]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
-                children: arr.map(function (item, i) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
-                      style: {
-                        color: "red"
-                      },
-                      children: item
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 my-5",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "card",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "card-body",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+                  className: "card-title",
+                  children: "Create Account"
+                }), this.state.isRegistered ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)((react_flash_message__WEBPACK_IMPORTED_MODULE_2___default()), {
+                  duration: 60000,
+                  persistOnHover: true,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+                    className: "alert alert-success",
+                    children: "Registration successful"
+                  })
+                }) : "", this.state.error ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)((react_flash_message__WEBPACK_IMPORTED_MODULE_2___default()), {
+                  duration: 900000,
+                  persistOnHover: true,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("h5", {
+                    className: "alert alert-danger",
+                    children: ["Error: ", this.state.error]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
+                    children: arr.map(function (item, i) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+                          style: {
+                            color: "red"
+                          },
+                          children: item
+                        })
+                      }, i);
                     })
-                  }, i);
-                })
-              })]
-            }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-              onSubmit: this.handleSubmit,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-group",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                  id: "name",
-                  type: "text",
-                  placeholder: "Name",
-                  className: "form-control",
-                  required: true,
-                  onChange: this.handleName
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-group",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                  id: "email",
-                  type: "email",
-                  name: "email",
-                  placeholder: "E-mail",
-                  className: "form-control",
-                  required: true,
-                  onChange: this.handleEmail
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-group",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                  id: "password",
-                  type: "password",
-                  name: "password",
-                  placeholder: "Password",
-                  className: "form-control",
-                  required: true,
-                  onChange: this.handlePassword
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-group",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                  id: "password_confirm",
-                  type: "password",
-                  name: "password_confirm",
-                  placeholder: "Confirm Password",
-                  className: "form-control",
-                  required: true,
-                  onChange: this.handlePasswordConfirm
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "submit",
-                name: "singlebutton",
-                className: "btn btn-default btn-lg  btn-block mb10",
-                disabled: this.state.formSubmitting ? "disabled" : "",
-                children: "Create Account"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-              className: "text-white",
-              children: ["Already have an account?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-                to: "/login",
-                className: "text-yellow",
-                children: [" ", "Log In"]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                className: "pull-right",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-                  to: "/",
-                  className: "text-white",
-                  children: "Back to Home"
-                })
-              })]
-            })]
+                  })]
+                }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+                  onSubmit: this.handleSubmit,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      id: "name",
+                      type: "text",
+                      placeholder: "Name",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handleName
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      id: "email",
+                      type: "email",
+                      name: "email",
+                      placeholder: "E-mail",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handleEmail
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      id: "password",
+                      type: "password",
+                      name: "password",
+                      placeholder: "Password",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handlePassword
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      id: "password_confirm",
+                      type: "password",
+                      name: "password_confirm",
+                      placeholder: "Confirm Password",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handlePasswordConfirm
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      id: "phone",
+                      type: "text",
+                      name: "phone",
+                      placeholder: "Phone Number",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handlePhone
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                    type: "submit",
+                    name: "singlebutton",
+                    className: "btn btn-primary mb-5",
+                    disabled: this.state.formSubmitting ? "disabled" : "",
+                    children: "Create Account"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "d-flex justify-content-between",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
+                    className: "text-dark",
+                    children: ["Already have an account?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+                      to: "/login",
+                      className: "text-yellow",
+                      children: [" ", "Log In"]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "pull-right",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+                      to: "/",
+                      className: "text-dark",
+                      children: "Back to Home"
+                    })
+                  })]
+                })]
+              })
+            })
           })
         })
       });
@@ -6650,8 +6692,8 @@ var Home = /*#__PURE__*/function (_Component) {
       var state = localStorage["appState"];
 
       if (state) {
-        var AppState = JSON.parse(state);
-        console.log(AppState);
+        var AppState = JSON.parse(state); // console.log(AppState);
+
         this.setState({
           isLoggedIn: AppState.isLoggedIn,
           user: AppState.user
@@ -6688,6 +6730,13 @@ var Home = /*#__PURE__*/function (_Component) {
                 children: "Email"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                 children: this.state.user.email
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+                scope: "row ",
+                children: "Phone"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
+                children: this.state.user.phone
               })]
             })]
           })

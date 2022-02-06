@@ -14,7 +14,7 @@ class Home extends Component {
         if (state) {
             let AppState = JSON.parse(state);
 
-            console.log(AppState);
+            // console.log(AppState);
 
             this.setState({
                 isLoggedIn: AppState.isLoggedIn,
@@ -44,6 +44,10 @@ class Home extends Component {
                         <tr>
                             <th scope="row ">Email</th>
                             <td>{this.state.user.email}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row ">Phone</th>
+                            <td>{this.state.user.phone}</td>
                         </tr>
                     </tbody>
                 </table>
