@@ -16,14 +16,20 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ]);
+
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+
         $user->save();
+
         return response()->json([
-            'message' => 'Successfully created user!'
+            'success' => true,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
         ], 201);
     }
 
@@ -55,6 +61,10 @@ class AuthController extends Controller
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
         return response()->json([
+            'success' => true,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
