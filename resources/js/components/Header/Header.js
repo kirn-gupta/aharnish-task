@@ -78,11 +78,15 @@ class Header extends Component {
                         )}
                         {!this.state.isLoggedIn ? (
                             <>
-                                <li className="nav-item" className="nav-link">
-                                    <Link to="/login">Login</Link>
+                                <li className="nav-item">
+                                    <Link to="/login" className="nav-link">
+                                        Login
+                                    </Link>
                                 </li>
-                                <li className="nav-item" className="nav-link">
-                                    <Link to="/register">Register</Link>
+                                <li className="nav-item">
+                                    <Link to="/register" className="nav-link">
+                                        Register
+                                    </Link>
                                 </li>
                             </>
                         ) : (
