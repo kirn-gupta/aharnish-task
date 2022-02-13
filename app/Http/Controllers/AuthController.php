@@ -14,31 +14,41 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
+            'photo' => 'required|image|mimes:jpeg,jpg,png|required|max:10000'
         ]);
 
+        $user = new User;
 
+        // echo '<pre>';
+        // print_r($request->photo);
+        // die()
 
-        $user = new User([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => bcrypt($request->password)
-        ]);
+        if ($request->hasFile('photo')) {
+            $name = $request->photo->getClientOriginalName();
+            $dir = 'uploads/profile/';
+            $path = $request->photo->storeAs($dir, $name, 'public');
 
-        // print_r($user);
-        // print_r($request->email);
-        // die();
-
-        $user->save();
-
-        return response()->json([
-            'success' => true,
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $request->phone,
-        ], 201);
+            $user->photo = $name;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return response()->json([
+                'success' => true,
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'photo' => $user->photo
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Something Went Wrong !'
+            ], 401);
+        }
     }
 
     public function login(Request $request)
@@ -70,6 +80,7 @@ class AuthController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
+            'photo' => $user->photo,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(

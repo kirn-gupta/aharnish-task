@@ -35,6 +35,7 @@ class LoginContainer extends Component {
             return this.props.history.push(prevLocation);
         }
     }
+
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ formSubmitting: true });
@@ -52,8 +53,12 @@ class LoginContainer extends Component {
                         name: json.data.name,
                         email: json.data.email,
                         phone: json.data.phone,
+                        photo: json.data.photo,
                         access_token: json.data.access_token,
                     };
+
+                    // console.log(userData);
+
                     let appState = {
                         isLoggedIn: true,
                         user: userData,

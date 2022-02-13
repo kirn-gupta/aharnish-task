@@ -16,6 +16,7 @@ class RegisterContainer extends Component {
                 password: "",
                 password_confirmation: "",
                 phone: "",
+                photo: "",
             },
             redirect: props.redirect,
         };
@@ -25,6 +26,7 @@ class RegisterContainer extends Component {
         this.handlePassword = this.handlePassword.bind(this);
         this.handlePasswordConfirm = this.handlePasswordConfirm.bind(this);
         this.handlePhone = this.handlePhone.bind(this);
+        this.handlePhoto = this.handlePhoto.bind(this);
     }
 
     componentWillMount() {
@@ -45,64 +47,6 @@ class RegisterContainer extends Component {
         if (prevLocation && this.state.isLoggedIn) {
             return this.props.history.push(prevLocation);
         }
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        this.setState({ formSubmitting: true });
-        ReactDOM.findDOMNode(this).scrollIntoView();
-        let userData = this.state.user;
-        // console.log(userData);
-        axios
-            .post("/api/auth/signup", userData)
-            .then((response) => {
-                return response;
-            })
-            .then((json) => {
-                if (json.data.success) {
-                    let userData = {
-                        id: json.data.id,
-                        name: json.data.name,
-                        email: json.data.email,
-                        phone: json.data.phone,
-                        activation_token: json.data.activation_token,
-                    };
-                    let appState = {
-                        isRegistered: true,
-                        user: userData,
-                    };
-                    localStorage["appState"] = JSON.stringify(appState);
-                    this.setState({
-                        isRegistered: appState.isRegistered,
-                        user: appState.user,
-                    });
-                } else {
-                    alert(`Our System Failed To Register Your Account!`);
-                }
-            })
-            .catch((error) => {
-                if (error.response) {
-                    let err = error.response.data;
-                    this.setState({
-                        error: err.message,
-                        errorMessage: err.errors,
-                        formSubmitting: false,
-                    });
-                } else if (error.request) {
-                    let err = error.request;
-                    this.setState({
-                        error: err,
-                        formSubmitting: false,
-                    });
-                } else {
-                    let err = error.message;
-                    this.setState({
-                        error: err,
-                        formSubmitting: false,
-                    });
-                }
-            })
-            .finally(this.setState({ error: "" }));
     }
 
     handleName(e) {
@@ -155,6 +99,91 @@ class RegisterContainer extends Component {
         }));
         // console.log(this.state.user);
     }
+
+    handlePhoto(e) {
+        this.setState((prevState) => ({
+            user: {
+                ...prevState.user,
+                photo: e.target.files[0],
+            },
+        }));
+        // console.log(this.state.user);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ formSubmitting: true });
+        ReactDOM.findDOMNode(this).scrollIntoView();
+        let userData = this.state.user;
+        // console.log(userData);
+
+        const formData = new FormData();
+        formData.append("name", userData.name);
+        formData.append("email", userData.email);
+        formData.append("password", userData.password);
+        formData.append(
+            "password_confirmation",
+            userData.password_confirmation
+        );
+        formData.append("phone", userData.phone);
+        formData.append("photo", userData.photo);
+
+        // Details of the uploaded file
+        console.log(formData);
+
+        axios
+            .post("/api/auth/signup", formData)
+            .then((response) => {
+                return response;
+            })
+            .then((json) => {
+                if (json.data.success) {
+                    let userData = {
+                        id: json.data.id,
+                        name: json.data.name,
+                        email: json.data.email,
+                        phone: json.data.phone,
+                        photo: json.data.photo,
+                        activation_token: json.data.activation_token,
+                    };
+                    let appState = {
+                        isRegistered: true,
+                        user: userData,
+                    };
+                    localStorage["appState"] = JSON.stringify(appState);
+                    this.setState({
+                        isRegistered: appState.isRegistered,
+                        user: appState.user,
+                    });
+                } else {
+                    alert(`Our System Failed To Register Your Account!`);
+                }
+            })
+            .catch((error) => {
+                if (error.response) {
+                    let err = error.response.data;
+                    this.setState({
+                        error: err.message,
+                        errorMessage: err.errors,
+                        formSubmitting: false,
+                    });
+                } else if (error.request) {
+                    let err = error.request;
+                    this.setState({
+                        error: err,
+                        formSubmitting: false,
+                    });
+                } else {
+                    let err = error.message;
+                    this.setState({
+                        error: err,
+                        formSubmitting: false,
+                    });
+                }
+            })
+            .finally(this.setState({ error: "" }));
+    }
+
     render() {
         let errorMessage = this.state.errorMessage;
         let arr = [];
@@ -256,6 +285,17 @@ class RegisterContainer extends Component {
                                             className="form-control"
                                             required
                                             onChange={this.handlePhone}
+                                        />
+                                    </div>
+                                    <div className="form-group my-3">
+                                        <input
+                                            id="photo"
+                                            type="file"
+                                            name="photo"
+                                            placeholder="Profile Photo"
+                                            className="form-control"
+                                            required
+                                            onChange={this.handlePhoto}
                                         />
                                     </div>
                                     <button

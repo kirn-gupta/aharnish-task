@@ -5961,8 +5961,10 @@ var LoginContainer = /*#__PURE__*/function (_Component) {
             name: json.data.name,
             email: json.data.email,
             phone: json.data.phone,
+            photo: json.data.photo,
             access_token: json.data.access_token
-          };
+          }; // console.log(userData);
+
           var appState = {
             isLoggedIn: true,
             user: _userData
@@ -6345,7 +6347,8 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
         email: "",
         password: "",
         password_confirmation: "",
-        phone: ""
+        phone: "",
+        photo: ""
       },
       redirect: props.redirect
     };
@@ -6355,6 +6358,7 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
     _this.handlePassword = _this.handlePassword.bind(_assertThisInitialized(_this));
     _this.handlePasswordConfirm = _this.handlePasswordConfirm.bind(_assertThisInitialized(_this));
     _this.handlePhone = _this.handlePhone.bind(_assertThisInitialized(_this));
+    _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -6388,70 +6392,6 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
       if (prevLocation && this.state.isLoggedIn) {
         return this.props.history.push(prevLocation);
       }
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      var _this2 = this;
-
-      e.preventDefault();
-      this.setState({
-        formSubmitting: true
-      });
-      react_dom__WEBPACK_IMPORTED_MODULE_1__.findDOMNode(this).scrollIntoView();
-      var userData = this.state.user; // console.log(userData);
-
-      axios.post("/api/auth/signup", userData).then(function (response) {
-        return response;
-      }).then(function (json) {
-        if (json.data.success) {
-          var _userData = {
-            id: json.data.id,
-            name: json.data.name,
-            email: json.data.email,
-            phone: json.data.phone,
-            activation_token: json.data.activation_token
-          };
-          var appState = {
-            isRegistered: true,
-            user: _userData
-          };
-          localStorage["appState"] = JSON.stringify(appState);
-
-          _this2.setState({
-            isRegistered: appState.isRegistered,
-            user: appState.user
-          });
-        } else {
-          alert("Our System Failed To Register Your Account!");
-        }
-      })["catch"](function (error) {
-        if (error.response) {
-          var err = error.response.data;
-
-          _this2.setState({
-            error: err.message,
-            errorMessage: err.errors,
-            formSubmitting: false
-          });
-        } else if (error.request) {
-          var _err = error.request;
-
-          _this2.setState({
-            error: _err,
-            formSubmitting: false
-          });
-        } else {
-          var _err2 = error.message;
-
-          _this2.setState({
-            error: _err2,
-            formSubmitting: false
-          });
-        }
-      })["finally"](this.setState({
-        error: ""
-      }));
     }
   }, {
     key: "handleName",
@@ -6512,6 +6452,91 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
           })
         };
       }); // console.log(this.state.user);
+    }
+  }, {
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      this.setState(function (prevState) {
+        return {
+          user: _objectSpread(_objectSpread({}, prevState.user), {}, {
+            photo: e.target.files[0]
+          })
+        };
+      }); // console.log(this.state.user);
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      this.setState({
+        formSubmitting: true
+      });
+      react_dom__WEBPACK_IMPORTED_MODULE_1__.findDOMNode(this).scrollIntoView();
+      var userData = this.state.user; // console.log(userData);
+
+      var formData = new FormData();
+      formData.append("name", userData.name);
+      formData.append("email", userData.email);
+      formData.append("password", userData.password);
+      formData.append("password_confirmation", userData.password_confirmation);
+      formData.append("phone", userData.phone);
+      formData.append("photo", userData.photo); // Details of the uploaded file
+
+      console.log(formData);
+      axios.post("/api/auth/signup", formData).then(function (response) {
+        return response;
+      }).then(function (json) {
+        if (json.data.success) {
+          var _userData = {
+            id: json.data.id,
+            name: json.data.name,
+            email: json.data.email,
+            phone: json.data.phone,
+            photo: json.data.photo,
+            activation_token: json.data.activation_token
+          };
+          var appState = {
+            isRegistered: true,
+            user: _userData
+          };
+          localStorage["appState"] = JSON.stringify(appState);
+
+          _this2.setState({
+            isRegistered: appState.isRegistered,
+            user: appState.user
+          });
+        } else {
+          alert("Our System Failed To Register Your Account!");
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          var err = error.response.data;
+
+          _this2.setState({
+            error: err.message,
+            errorMessage: err.errors,
+            formSubmitting: false
+          });
+        } else if (error.request) {
+          var _err = error.request;
+
+          _this2.setState({
+            error: _err,
+            formSubmitting: false
+          });
+        } else {
+          var _err2 = error.message;
+
+          _this2.setState({
+            error: _err2,
+            formSubmitting: false
+          });
+        }
+      })["finally"](this.setState({
+        error: ""
+      }));
     }
   }, {
     key: "render",
@@ -6614,6 +6639,17 @@ var RegisterContainer = /*#__PURE__*/function (_Component) {
                       className: "form-control",
                       required: true,
                       onChange: this.handlePhone
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "form-group my-3",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      id: "photo",
+                      type: "file",
+                      name: "photo",
+                      placeholder: "Profile Photo",
+                      className: "form-control",
+                      required: true,
+                      onChange: this.handlePhoto
                     })
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                     type: "submit",
@@ -6990,6 +7026,16 @@ var Home = /*#__PURE__*/function (_Component) {
                         className: "table table-striped",
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tbody", {
                           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                              scope: "row ",
+                              children: "Photo"
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+                                src: "public/profile/" + this.state.user.photo,
+                                alt: ""
+                              }), "public/profile/" + this.state.user.photo]
+                            })]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
                             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
                               scope: "row ",
                               children: "User Id"

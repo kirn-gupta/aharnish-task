@@ -46,6 +46,25 @@ class Home extends Component {
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row ">
+                                                            Photo
+                                                        </th>
+                                                        <td>
+                                                            <img
+                                                                src={
+                                                                    "public/profile/" +
+                                                                    this.state
+                                                                        .user
+                                                                        .photo
+                                                                }
+                                                                alt=""
+                                                            />
+                                                            {"public/profile/" +
+                                                                this.state.user
+                                                                    .photo}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row ">
                                                             User Id
                                                         </th>
                                                         <td>
