@@ -7,7 +7,7 @@ export default class Nav extends Component {
                 id="sidebarMenu"
                 className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
             >
-                <div className="position-sticky pt-3">
+                <div className="position-sticky pt-3" style={{}}>
                     <ul className="nav flex-column">
                         <li className="nav-item">
                             <Link to="/dashboard" className="nav-link">
@@ -23,72 +23,6 @@ export default class Nav extends Component {
                             <Link to="/contact" className="nav-link">
                                 Contact
                             </Link>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Link 1
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Link 2
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                                Link 3
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Link 1
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Link 2
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                                Link 3
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Link 1
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Link 2
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                                Link 3
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Link 1
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Link 2
-                            </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">
