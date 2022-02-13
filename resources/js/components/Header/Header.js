@@ -24,77 +24,68 @@ class Header extends Component {
         };
 
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarNavDropdown"
-                    aria-controls="navbarNavDropdown"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div
-                    className="collapse navbar-collapse"
-                    id="navbarNavDropdown"
-                >
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link to="/" className="nav-link">
-                                Index
-                            </Link>
-                        </li>
+            <>
+                <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+                    <Link
+                        to="/dashboard"
+                        className="navbar-brand col-md-3 col-lg-2 me-0 px-3"
+                    >
+                        Aharnish Task
+                    </Link>
+                    <button
+                        className="navbar-toggler position-absolute d-md-none collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#sidebarMenu"
+                        aria-controls="sidebarMenu"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div className="nav">
                         {this.state.isLoggedIn ? (
                             <>
-                                <li className="nav-item">
-                                    <Link to="/dashboard" className="nav-link">
-                                        Dashboard
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/about" className="nav-link">
-                                        About
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/contact" className="nav-link">
-                                        Contact
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
+                                <div className="nav-item text-nowrap">
                                     <a
-                                        href=""
+                                        className="nav-link px-3 text-white"
+                                        href="#"
                                         onClick={this.logOut}
-                                        className="nav-link"
                                     >
-                                        Logout
+                                        Sign out
                                     </a>
-                                </li>
+                                </div>
                             </>
                         ) : (
                             ""
                         )}
+
                         {!this.state.isLoggedIn ? (
                             <>
-                                <li className="nav-item">
-                                    <Link to="/login" className="nav-link">
+                                <div className="nav-item text-nowrap">
+                                    <Link
+                                        to="/login"
+                                        className="nav-link px-3  text-white"
+                                    >
                                         Login
                                     </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/register" className="nav-link">
+                                </div>
+                                <div className="nav-item text-nowrap">
+                                    <Link
+                                        to="/register"
+                                        className="nav-link px-3  text-white"
+                                    >
                                         Register
                                     </Link>
-                                </li>
+                                </div>
                             </>
                         ) : (
                             ""
                         )}
-                    </ul>
-                </div>
-            </nav>
+                    </div>
+                </header>
+            </>
         );
     }
 }

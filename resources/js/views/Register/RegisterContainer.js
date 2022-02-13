@@ -282,11 +282,6 @@ class RegisterContainer extends Component {
                                             Log In
                                         </Link>
                                     </p>
-                                    <span className="pull-right">
-                                        <Link to="/" className="text-dark">
-                                            Back to Home
-                                        </Link>
-                                    </span>
                                 </div>
                             </div>
                         </div>

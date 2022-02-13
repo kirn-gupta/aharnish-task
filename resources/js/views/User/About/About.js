@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../../../components/Header/Header";
+import Nav from "../Inc/Nav";
 class About extends Component {
     constructor() {
         super();
@@ -30,18 +31,23 @@ class About extends Component {
                     userData={this.state.user}
                     userIsLoggedIn={this.state.isLoggedIn}
                 />
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-12 my-5">
-                            <div className="card">
-                                <div className="card-header">
-                                    About Component
-                                </div>
-                                <div className="card-body">
-                                    I'm an About component!
+                        <Nav />
+                        <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                            <div className="row">
+                                <div className="col-md-12 my-5">
+                                    <div className="card">
+                                        <div className="card-header">
+                                            About Component
+                                        </div>
+                                        <div className="card-body">
+                                            I'm an About component!
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </main>
                     </div>
                 </div>
             </>

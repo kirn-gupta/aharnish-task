@@ -203,9 +203,6 @@ class LoginContainer extends Component {
                                             Register
                                         </Link>
                                     </p>
-                                    <Link to="/" className="text-dark">
-                                        Back to Index
-                                    </Link>
                                 </div>
                             </div>
                         </div>
